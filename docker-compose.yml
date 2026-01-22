@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: expense_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: expensedb
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
