@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head lang="it" xmlns:th="http://www.thymeleaf.org">
+        <meta charset="UTF-8">
+        <title>Nuova Spesa</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 font-sans">
+
+        <div class="container mx-auto p-10 max-w-lg">
+
+            <h1 class="text-3xl font-bold text-blue-600 mb-6">Aggiungi Nuova Spesa</h1>
+
+            <form th:action="@{/expenses/save}" th:object="${expense}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+                <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Descrizione</label>
+                <input type="text" th:field="*{description}" required
+                       class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                       placeholder="Es. Pizza con amici">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Importo (€)</label>
+                <input type="number" step="0.01" th:field="*{amount}" required
+                       class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                       placeholder="0.00">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Data</label>
+                <input type="date" th:field="*{date}" required
+                       class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Categoria</label>
+                <input type="text" th:field="*{category}" required
+                       class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                       placeholder="Es. Cibo, Casa, Svago">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none">
+                    Salva Spesa
+                </button>
+                <a href="/expenses" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                    Annulla
+                </a>
+            </div>
+            </form>
+        </div>
+
+    </body>
+</html>
