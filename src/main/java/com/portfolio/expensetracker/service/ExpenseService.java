@@ -35,6 +35,10 @@ public class ExpenseService {
      * @throws IllegalArgumentException se l'importo è negativo o zero.
      */
     public Expense saveExpense(Expense expense) {
+        //Controllo se l'importo è null
+        if(expense.getAmount() == null){
+         throw new IllegalArgumentException("L'importo non può essere nullo");
+        }
         // Business Logic: Validazione
         if (expense.getAmount().signum() <= 0) {
             throw new IllegalArgumentException("L'importo della spesa deve essere positivo");

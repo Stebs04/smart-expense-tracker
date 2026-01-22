@@ -15,7 +15,7 @@ import java.time.LocalDate;
  * Gestisce visualizzazione, creazione, ricerca e cancellazione.
  */
 @Controller
-@RequestMapping("/expenses")
+@RequestMapping("/expense")
 @RequiredArgsConstructor
 public class ExpenseController {
 
@@ -30,7 +30,7 @@ public class ExpenseController {
         var listExpenses = expenseService.getAllExpenses();
         // Nota: uso il plurale "expenses" perché è una lista
         model.addAttribute("expenses", listExpenses);
-        return "expenses-list";
+        return "expense-list";
     }
 
     /**
@@ -50,7 +50,7 @@ public class ExpenseController {
     @PostMapping("/save")
     public String saveExpense(@ModelAttribute("expense") Expense expense) {
         expenseService.saveExpense(expense);
-        return "redirect:/expenses";
+        return "redirect:/expense";
     }
 
     /**
@@ -61,7 +61,7 @@ public class ExpenseController {
     @GetMapping("/delete/{id}") // Nota le parentesi graffe {id}
     public String deleteExpense(@PathVariable(value = "id") Long id) {
         expenseService.deleteExpense(id);
-        return "redirect:/expenses";
+        return "redirect:/expense";
     }
 
     /**
@@ -74,7 +74,7 @@ public class ExpenseController {
         var listExpenses = expenseService.getExpensesByCategory(category);
         // Riutilizziamo la STESSA vista della home page, ma con la lista filtrata!
         model.addAttribute("expenses", listExpenses);
-        return "expenses-list";
+        return "expense-list";
     }
 
     /**
@@ -89,6 +89,6 @@ public class ExpenseController {
 
         var listExpenses = expenseService.getExpensesByDate(startDate, endDate);
         model.addAttribute("expenses", listExpenses);
-        return "expenses-list";
+        return "expense-list";
     }
 }
