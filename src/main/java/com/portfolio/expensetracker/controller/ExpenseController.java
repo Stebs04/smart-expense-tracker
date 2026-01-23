@@ -1,6 +1,8 @@
 package com.portfolio.expensetracker.controller;
 
 import com.portfolio.expensetracker.model.Expense;
+import com.portfolio.expensetracker.model.User;
+import com.portfolio.expensetracker.repository.UserRepository; // <--- NUOVO
 import com.portfolio.expensetracker.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 /**
@@ -20,15 +23,22 @@ import java.time.LocalDate;
 public class ExpenseController {
 
     private final ExpenseService expenseService;
+    private final UserRepository userRepository;
 
     /**
      * Gestisce la richiesta GET sulla pagina principale.
-     * Mostra l'elenco completo delle spese.
+     * Mostra l'elenco completo delle spese fatte dall'utente loggato.
      */
     @GetMapping
-    public String viewHomePage(Model model) {
-        var listExpenses = expenseService.getAllExpenses();
-        // Nota: uso il plurale "expenses" perché è una lista
+    public String viewHomePage(Model model, Principal principal) {
+       String email = principal.getName(); //La mail dell'utente loggato
+
+        //Recuperiamo l'oggetto utente dal DB
+        User currentUser = userRepository.findByEmail(email);
+
+        //Chiedo al service solo le spese di questo utente
+        var listExpenses = expenseService.getExpencesByUser(currentUser);
+
         model.addAttribute("expenses", listExpenses);
         return "expense-list";
     }
@@ -48,7 +58,15 @@ public class ExpenseController {
      * Salva la spesa ricevuta dal form.
      */
     @PostMapping("/save")
-    public String saveExpense(@ModelAttribute("expense") Expense expense) {
+    public String saveExpense(@ModelAttribute("expense") Expense expense, Principal principal) {
+        //Leggiamo chi sta salvando la spesa
+        String email = principal.getName();
+        User currentUser = userRepository.findByEmail(email);
+
+        //Settiamo la spesa all'utente che l'ha fatta
+        expense.setUser(currentUser);
+
+        //Salvo la spesa
         expenseService.saveExpense(expense);
         return "redirect:/expense";
     }

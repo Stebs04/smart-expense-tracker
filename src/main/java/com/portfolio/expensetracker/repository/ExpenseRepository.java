@@ -1,6 +1,7 @@
 package com.portfolio.expensetracker.repository;
 
 import com.portfolio.expensetracker.model.Expense;
+import com.portfolio.expensetracker.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -32,4 +33,12 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long>{
      * @return Lista di spese nel range temporale
      */
     List<Expense> findByDateBetween(LocalDate startDate, LocalDate endDate);
+
+    /**
+     * Trova tutte le spese effettuate da un singolo utente
+     * <p> Genera SQL: SELECT * FROM expenses WHERE user_id = ?</p>
+     * @param user {@link User} l'utente che ha effettutato la spesa
+     * @return una lista {@link List} di tutte le spese effettuate da un utente
+     */
+    List<Expense> findByUser(User user);
 }

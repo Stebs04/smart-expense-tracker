@@ -30,11 +30,12 @@ public class Expense {
     @Column(nullable = false)
     private String description; //Descrizione testuale della spesa.(Campo obbligatorio)
 
-    @NotBlank(message = "L'importo è obbligatorio")
+    @jakarta.validation.constraints.NotNull(message = "L'importo è obbligatorio")
+    @jakarta.validation.constraints.Positive(message = "L'importo deve essere positivo")
     @Column(nullable = false)
     private BigDecimal amount; //Importo monetario della spesa. Utilizza BigDecimal per la precisione nei calcoli
 
-    @NotBlank(message = "La data è obbligatoria")
+    @jakarta.validation.constraints.NotNull(message = "La data è obbligatoria")
     @Column(nullable = false)
     private LocalDate date; //Data in cui è stata effettuata la spesa. Utilizza LocalDate (solo giorno, mese, anno).
 
