@@ -1,6 +1,7 @@
 package com.portfolio.expensetracker.service;
 
 import com.portfolio.expensetracker.model.Expense;
+import com.portfolio.expensetracker.model.User;
 import com.portfolio.expensetracker.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,13 @@ public class ExpenseService {
             throw new IllegalArgumentException("La categoria non può essere vuota!!");
         }
         return expenseRepository.findByCategory(category);
+    }
+
+    /**
+     * Trova tutte le spese fatte da un utente
+     */
+    public List<Expense> getExpencesByUser(User user){
+        return expenseRepository.findByUser(user);
     }
 
 }
