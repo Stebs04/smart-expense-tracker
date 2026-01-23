@@ -56,4 +56,12 @@ public class AuthController {
         //Se tutto ok redirect al login
         return "redirect:/login?success";
     }
+
+    /**
+     * Metodo che gestiste il login
+     */
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
 }
