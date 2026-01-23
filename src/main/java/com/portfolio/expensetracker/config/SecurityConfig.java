@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
+                        .loginPage("/login")
                         //Se il login va a buon fine, redirect su expense
                         .defaultSuccessUrl("/expense", true)
                         .permitAll()
